@@ -10,27 +10,36 @@ Office.onReady(info => {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("run").onclick = run;
+    document.querySelector("#clearDocument").onclick = clearDocument;
+    document.querySelector("#test").onclick = test;
   }
 });
 
+function test() {
+  return Word.run(async context => {
+    let document = context.document.body;
+    console.log("funcion: ", document);
+    document.insertTable();
+    await context.sync();
+  });
+}
+
+function clearDocument() {
+  return Word.run(async context => {
+    let document = context.document.body;
+    document.clear();
+
+  });
+}
+
 export async function run() {
   return Word.run(async context => {
-    /**
-     * Insert your Word code here
-     */
-
-    // insert a paragraph at the end of the document.
     let document = context.document.body;
     document.insertParagraph("Hello wod", Word.InsertLocation.end);
-    const paragraph = document.insertParagraph("aea", Word.InsertLocation.end);
-    setTimeout(async () => {
-      document.clear();
-      await context.sync();
-      console.log("aea brys");
-    }, 3000);
-
-    // change the paragraph color to blue.
-    paragraph.font.color = "blue";
+    console.log("testeando");
+    const paragraph = document.insertParagraph("123123", Word.InsertLocation.end);
+    await context.sync();
+    paragraph.font.color = "red";
 
   });
 }
